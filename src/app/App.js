@@ -1,12 +1,13 @@
-import { QueryClientProvider } from 'react-query'
-import { queryClient } from './queryClient'
 import './variables.css'
 import './App.css'
+import { QueryClientProvider } from 'react-query'
+import { queryClient } from './queryClient'
+import { TodoList } from 'features/TodoList'
 
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <h1>Hello World</h1>
+      <TodoList />
     </QueryClientProvider>
   )
 }
