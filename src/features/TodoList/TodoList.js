@@ -1,23 +1,39 @@
 import React, { useState } from 'react'
 import styles from './TodoList.module.css'
-import { useTodos } from 'hooks/useTodos'
+import { useTodos } from 'hooks/use-todos'
 
 export const TodoList = ({ children }) => {
-  const { todos, addTodo } = useTodos()
+  const [todos, addTodo, deleteTodo] = useTodos()
   const [newTodo, setNewTodo] = useState('')
 
   const onSubmit = (e) => {
     e.preventDefault()
-    addTodo(newTodo)
+    addTodo.mutate(newTodo)
     setNewTodo('')
+  }
+
+  if (todos.isLoading) {
+    return 'Loading...'
+  }
+
+  if (todos.isError) {
+    return `Error: ${todos.error.message}`
   }
 
   return (
     <div className={styles.TodoList}>
-      <h1>To do</h1>
+      <h1>Todos</h1>
       <ul>
-        {todos.map((todo) => (
-          <li key={todo}>{todo}</li>
+        {todos.data.map((todo) => (
+          <li key={todo}>
+            {todo}{' '}
+            <span
+              onClick={() => deleteTodo.mutate(todo)}
+              style={{ cursor: 'default' }}
+            >
+              🗑
+            </span>
+          </li>
         ))}
       </ul>
       <form onSubmit={onSubmit}>

@@ -1,3 +1,4 @@
+import './reset.css'
 import './variables.css'
 import './App.css'
 import { QueryClientProvider } from 'react-query'
